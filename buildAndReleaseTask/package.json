@@ -1,0 +1,24 @@
+{
+  "name": "buildandreleasetask",
+  "version": "{{versionNumber}}",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/request-promise-native": "^1.0.17",
+    "azure-pipelines-task-lib": "^2.9.3",
+    "dotenv": "^8.2.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.5",
+    "@types/q": "^1.5.2",
+    "sync-request": "^6.1.0"
+  }
+}

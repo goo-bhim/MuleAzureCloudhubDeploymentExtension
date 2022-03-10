@@ -1,0 +1,226 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "{{taskguid}}",
+    "name": "{{taskname}}",
+    "friendlyName": "{{taskfriendlyname}}",
+    "description": "{{taskdescription}}",
+    "helpMarkDown": "",
+    "category": "Deploy",
+    "author": "{{taskauthor}}",
+    "version": {
+        "Major": 1,
+        "Minor": 0,
+        "Patch": 0
+    },
+    "groups": [
+        {
+            "name": "deploymentSettings",
+            "displayName": "Deployment Settings",
+            "isExpanded": true
+        },
+        {
+            "name": "workerSettings",
+            "displayName": "Worker Settings",
+            "isExpanded": false
+        },
+        {
+            "name": "additionalSettings",
+            "displayName": "Additional Settings",
+            "isExpanded": false
+        }
+    ],
+    "instanceNameFormat": "Deploy $(domainName)",
+    "inputs": [
+        {
+            "name": "artifactDropPath",
+            "type": "string",
+            "label": "Build Artifact Path",
+            "defaultValue": "./build/drop/target",
+            "required": true,
+            "helpMarkDown": "Location of .jar / .zip file to deploy",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "cloudhubUser",
+            "type": "string",
+            "label": "Cloudhub Username",
+            "defaultValue": "$(cloudhub_username)",
+            "required": true,
+            "helpMarkDown": "Cloudhub service account username for deployments",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "cloudhubPass",
+            "type": "string",
+            "label": "Cloudhub Password",
+            "defaultValue": "$(cloudhub_password)",
+            "required": true,
+            "helpMarkDown": "Cloudhub service account password for deployments",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "organizationId",
+            "type": "string",
+            "label": "Organization ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Target ID for Business Organization to deploy to",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "environmentId",
+            "type": "string",
+            "label": "Environment ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Target ID for Environment to deploy to",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "domainName",
+            "type": "string",
+            "label": "Domain Name",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Name used by application in Cloudhub",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "muleVersion",
+            "type": "string",
+            "label": "Mule Version",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Mule runtime version (for example, 4.2.0)",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "region",
+            "type": "string",
+            "label": "Region",
+            "defaultValue": "us-east-1",
+            "required": true,
+            "helpMarkDown": "Cloudhub deployment region (default to us-east-1)",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "workerAmount",
+            "type": "string",
+            "label": "Number of Workers",
+            "defaultValue": "1",
+            "required": true,
+            "helpMarkDown": "Amount of workers",
+            "groupName": "workerSettings"
+        },
+        {
+            "name": "workerTypeName",
+            "type": "pickList",
+            "label": "Worker Size",
+            "defaultValue": "Micro",
+            "required": true,
+            "helpMarkDown": "Size of each worker",
+            "groupName": "workerSettings",
+            "options": {
+                "Micro": "Micro (0.1 vCores, 500 MB Memory)",
+                "Small": "Small (0.2 vCores, 1 GB Memory)",
+                "Medium": "Medium (1 vCores, 1.5 GB Memory)",
+                "Large": "Large (2 vCores, 3.5 GB Memory)"
+            }
+        },
+        {
+            "name": "anypointPlatformClientId",
+            "type": "string",
+            "label": "API Manager Client ID",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Anypoint Platform Client ID for API Manager Autodiscovery",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "anypointPlatformClientSecret",
+            "type": "string",
+            "label": "API Manager Client Secret",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Anypoint Platform Client Secret for API Manager Autodiscovery",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "cloudhubEnvironment",
+            "type": "string",
+            "label": "Cloudhub Environment Name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Environment indicator for properties file to load (SANDBOX, QA, or PROD)",
+            "groupName": "deploymentSettings"
+        },
+        {
+            "name": "monitoringEnabled",
+            "type": "boolean",
+            "label": "Enable Monitoring?",
+            "defaultValue": "true",
+            "required": true,
+            "helpMarkDown": "Enable Heartbeat monitoring?",
+            "groupName": "additionalSettings"
+        },
+        {
+            "name": "monitoringAutoRestart",
+            "type": "boolean",
+            "label": "Enable Auto Restart?",
+            "defaultValue": "true",
+            "required": true,
+            "helpMarkDown": "Restart application if it becomes unresponsive?",
+            "groupName": "additionalSettings"
+        },
+        {
+            "name": "loggingEnabled",
+            "type": "boolean",
+            "label": "Enable Logging?",
+            "defaultValue": "true",
+            "required": true,
+            "helpMarkDown": "Enable Cloudhub logging?",
+            "groupName": "additionalSettings"
+        },
+        {
+            "name": "persistentQueues",
+            "type": "boolean",
+            "label": "Enable Persistent Queues?",
+            "defaultValue": "false",
+            "required": true,
+            "helpMarkDown": "Enable persistent queues?",
+            "groupName": "additionalSettings"
+        },
+        {
+            "name": "useObjectStoreV2",
+            "type": "boolean",
+            "label": "Use Object Store v2?",
+            "defaultValue": "false",
+            "required": true,
+            "helpMarkDown": "Use Object Store v2 rather than v1?",
+            "groupName": "additionalSettings"
+        },
+        {
+            "name": "additionalProperties",
+            "type": "string",
+            "label": "Additional Runtime Properties",
+            "defaultValue": "{}",
+            "required": true,
+            "helpMarkDown": "Additional runtime properties (Format: {'db.password':'test123', 'db.username':'mulesoft'})",
+            "groupName": "additionalSettings"
+        },
+        {
+            "name": "securityKey",
+            "type": "string",
+            "label": "Security Key",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Security key for Mule encryption (leave as 0 if you are injection properties to the runtime)",
+            "groupName": "additionalSettings"
+        }
+    ],
+    "execution": {
+        "Node10": {
+            "target": "index.js"
+        }
+    }
+}

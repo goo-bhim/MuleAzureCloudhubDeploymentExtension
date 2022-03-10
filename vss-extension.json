@@ -1,0 +1,39 @@
+{
+    "manifestVersion": 1,
+    "id": "<<id>>-cloudhub-deployment",
+    "name": "<< Name>> Cloudhub Deployment for Mule",
+    "version": "<<version number ex. 1.0.0>>",
+    "publisher": "<<Publisher Name>>",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],    
+    "description": "Azure Pipeline Extension for deploying Mule 4 applications to Cloudhub.",
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "icons": {
+        "default": "images/extension-icon.png"
+    },
+    "files": [
+        {
+            "path": "buildAndReleaseTask"
+        },
+        {
+            "path": "buildAndReleaseTask/cloudhubDeployment.py", "packagePath": "/"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "<<id>>-deploy-to-cloudhub",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "buildAndReleaseTask"
+            }
+        }
+    ]
+}
